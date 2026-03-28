@@ -287,13 +287,20 @@ export default function SignupDetails() {
   const isLastStep = currentStep === STEPS.length - 1;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 p-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 p-4 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 blob-animation"></div>
+        <div className="absolute top-1/3 -left-40 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-15 blob-animation" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute -bottom-32 right-1/4 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-15 blob-animation" style={{ animationDelay: "4s" }}></div>
+      </div>
+
+      <div className="max-w-2xl mx-auto relative z-10">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 slide-up">
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6"
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6 transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
             Back
@@ -303,7 +310,7 @@ export default function SignupDetails() {
         </div>
 
         {/* Step Indicator */}
-        <div className="flex gap-2 mb-8">
+        <div className="flex gap-2 mb-8" style={{ animation: "slide-up 0.6s ease-out 0.1s both" }}>
           {STEPS.map((step, index) => (
             <div
               key={index}
@@ -314,9 +321,9 @@ export default function SignupDetails() {
           ))}
         </div>
 
-        <Card className="border-0 shadow-lg">
-          <CardHeader className="pb-6 border-b border-gray-100">
-            <CardTitle className="text-2xl">
+        <Card className="border-0 shadow-lg hover:shadow-2xl transition-shadow duration-300" style={{ animation: "slide-up 0.6s ease-out 0.2s both" }}>
+          <CardHeader className="pb-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-green-50">
+            <CardTitle className="text-2xl bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
               {currentStep === 0 && "Common Details"}
               {currentStep === 1 && roleConfig.title}
               {currentStep === 2 && "Upload Documents"}
@@ -329,7 +336,7 @@ export default function SignupDetails() {
           <CardContent className="pt-8">
             {/* Step 0: Common Details */}
             {currentStep === 0 && (
-              <div className="space-y-6">
+              <div className="space-y-6" style={{ animation: "slide-up 0.6s ease-out" }}>
                 {/* Full Name */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">
@@ -431,7 +438,7 @@ export default function SignupDetails() {
 
             {/* Step 1: Role-Specific Details */}
             {currentStep === 1 && (
-              <div className="space-y-6">
+              <div className="space-y-6" style={{ animation: "slide-up 0.6s ease-out" }}>
                 {roleConfig.fields.map((field: any) => (
                   <div key={field.name} className="space-y-2">
                     <label className="text-sm font-medium text-gray-700">
@@ -478,7 +485,7 @@ export default function SignupDetails() {
 
             {/* Step 2: Documents */}
             {currentStep === 2 && (
-              <div className="space-y-6">
+              <div className="space-y-6" style={{ animation: "slide-up 0.6s ease-out" }}>
                 {/* Common Documents */}
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-4">Required for All</h3>
@@ -512,30 +519,30 @@ export default function SignupDetails() {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex gap-4 mt-8 pt-6 border-t border-gray-100">
+            <div className="flex gap-4 mt-8 pt-6 border-t border-gray-100" style={{ animation: "slide-up 0.6s ease-out 0.1s both" }}>
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleBack}
-                className="flex-1 h-11 border-2"
+                className="flex-1 h-11 border-2 transition-all duration-300 hover:shadow-md hover:scale-[1.02]"
               >
-                <ChevronLeft className="w-4 h-4 mr-2" />
+                <ChevronLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
                 Back
               </Button>
               {!isLastStep ? (
                 <Button
                   type="button"
                   onClick={handleNext}
-                  className="flex-1 h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium flex items-center justify-center gap-2"
+                  className="flex-1 h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
                 >
                   Next
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               ) : (
                 <Button
                   type="button"
                   onClick={handleSubmit}
-                  className="flex-1 h-11 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium"
+                  className="flex-1 h-11 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
                 >
                   Complete Sign Up
                 </Button>
@@ -560,12 +567,14 @@ function DocumentUploadField({
   uploaded,
 }: DocumentUploadFieldProps) {
   return (
-    <div className="flex items-center justify-between p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-colors">
+    <div className="flex items-center justify-between p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-all duration-300 hover:bg-blue-50 hover:shadow-md group">
       <div className="flex items-center gap-3">
-        <Upload className="w-5 h-5 text-gray-400" />
+        <Upload className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
         <div>
           <p className="text-sm font-medium text-gray-900">{document}</p>
-          <p className="text-xs text-gray-500">
+          <p className={`text-xs transition-colors ${
+            uploaded ? "text-green-600" : "text-gray-500 group-hover:text-blue-600"
+          }`}>
             {uploaded ? "✓ Uploaded" : "Click to upload"}
           </p>
         </div>
@@ -578,10 +587,10 @@ function DocumentUploadField({
       />
       <label
         htmlFor={`upload-${document}`}
-        className={`px-4 py-2 rounded-lg font-medium cursor-pointer transition-colors ${
+        className={`px-4 py-2 rounded-lg font-medium cursor-pointer transition-all duration-300 ${
           uploaded
-            ? "bg-green-100 text-green-700 hover:bg-green-200"
-            : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+            ? "bg-green-100 text-green-700 hover:bg-green-200 hover:shadow-md"
+            : "bg-blue-100 text-blue-700 hover:bg-blue-200 hover:shadow-md"
         }`}
       >
         {uploaded ? "Change" : "Upload"}

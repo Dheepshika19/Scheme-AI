@@ -91,16 +91,22 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 relative">
+      {/* Animated background for chat area */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 -right-40 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-10 blob-animation"></div>
+        <div className="absolute top-20 -left-40 w-80 h-80 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-10 blob-animation" style={{ animationDelay: "2s" }}></div>
+      </div>
+
       {/* Sidebar */}
       <div
         className={`${
           sidebarOpen ? "w-64" : "w-0"
-        } transition-all duration-300 bg-gradient-to-b from-blue-900 to-blue-800 text-white flex flex-col overflow-hidden`}
+        } transition-all duration-300 bg-gradient-to-b from-blue-900 to-blue-800 text-white flex flex-col overflow-hidden relative z-20`}
       >
-        <div className="p-6 border-b border-blue-700">
+        <div className="p-6 border-b border-blue-700" style={{ animation: "slide-up 0.6s ease-out" }}>
           <h1 className="text-xl font-bold flex items-center gap-2">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center animate-pulse">
               <span className="text-blue-900 font-bold">AI</span>
             </div>
             Scheme AI
@@ -110,7 +116,8 @@ export default function Chatbot() {
         <div className="flex-1 p-4 space-y-4">
           <Button
             onClick={handleNewChat}
-            className="w-full justify-start bg-blue-700 hover:bg-blue-600 text-white"
+            className="w-full justify-start bg-blue-700 hover:bg-blue-600 text-white transition-all duration-300 hover:shadow-lg"
+            style={{ animation: "slide-up 0.6s ease-out 0.1s both" }}
           >
             + New Chat
           </Button>
@@ -130,18 +137,19 @@ export default function Chatbot() {
           <Button
             onClick={handleLogout}
             variant="outline"
-            className="w-full justify-start text-blue-100 border-blue-600 hover:bg-blue-700"
+            className="w-full justify-start text-blue-100 border-blue-600 hover:bg-blue-700 transition-all duration-300 hover:shadow-lg"
+            style={{ animation: "slide-up 0.6s ease-out 0.2s both" }}
           >
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut className="w-4 h-4 mr-2 transition-transform hover:-translate-x-1" />
             Logout
           </Button>
         </div>
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col relative z-10">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+        <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between" style={{ animation: "slide-up 0.6s ease-out" }}>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 hover:bg-gray-100 rounded-lg"
@@ -170,12 +178,16 @@ export default function Chatbot() {
               className={`flex ${
                 message.sender === "user" ? "justify-end" : "justify-start"
               }`}
+              style={{
+                animation: "slide-up 0.3s ease-out",
+                animationFillMode: "both",
+              }}
             >
               <div
-                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
+                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg transition-all ${
                   message.sender === "user"
-                    ? "bg-blue-600 text-white rounded-br-none"
-                    : "bg-white text-gray-900 border border-gray-200 rounded-bl-none"
+                    ? "bg-blue-600 text-white rounded-br-none hover:bg-blue-700 shadow-md"
+                    : "bg-white text-gray-900 border border-gray-200 rounded-bl-none hover:shadow-md"
                 }`}
               >
                 <p className="text-sm leading-relaxed">{message.text}</p>
@@ -211,7 +223,7 @@ export default function Chatbot() {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white border-t border-gray-200 p-4">
+        <div className="bg-white border-t border-gray-200 p-4" style={{ animation: "slide-up 0.6s ease-out" }}>
           <form onSubmit={handleSendMessage} className="flex gap-3">
             <Input
               type="text"
@@ -219,12 +231,12 @@ export default function Chatbot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isLoading}
-              className="h-11"
+              className="h-11 focus:ring-2 focus:ring-blue-500 transition-all"
             />
             <Button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6"
+              className="h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 transition-all duration-300 hover:shadow-lg disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
             </Button>

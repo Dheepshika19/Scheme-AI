@@ -69,10 +69,16 @@ export default function SignupRole() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 p-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 p-4 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 -left-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 blob-animation"></div>
+        <div className="absolute top-1/2 -right-40 w-80 h-80 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 blob-animation" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-15 blob-animation" style={{ animationDelay: "4s" }}></div>
+      </div>
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 slide-up">
           <button
             onClick={handleBack}
             className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6"
@@ -91,20 +97,23 @@ export default function SignupRole() {
 
         {/* Role Selection Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {roles.map((role) => {
+          {roles.map((role, index) => {
             const IconComponent = role.icon;
             return (
               <Card
                 key={role.id}
-                className="border-0 shadow-md hover:shadow-xl transition-shadow cursor-pointer group"
+                className="border-0 shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer group hover:scale-105 hover:-translate-y-2"
                 onClick={() => handleSelectRole(role.id)}
+                style={{
+                  animation: `slide-up 0.6s ease-out ${index * 0.1}s both`,
+                }}
               >
                 <CardContent className="p-6">
                   {/* Icon */}
                   <div
-                    className={`w-16 h-16 bg-gradient-to-br ${role.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                    className={`w-16 h-16 bg-gradient-to-br ${role.color} rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-125 group-hover:shadow-xl group-hover:shadow-blue-200`}
                   >
-                    <IconComponent className="w-8 h-8 text-white" />
+                    <IconComponent className="w-8 h-8 text-white transition-transform" />
                   </div>
 
                   {/* Title */}
@@ -123,10 +132,10 @@ export default function SignupRole() {
                       e.stopPropagation();
                       handleSelectRole(role.id);
                     }}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium h-10 flex items-center justify-center gap-2"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium h-10 flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg"
                   >
                     Continue
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </CardContent>
               </Card>
